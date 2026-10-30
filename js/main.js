@@ -165,6 +165,7 @@
 
   /* ---------- Parallax (hero image) ---------- */
   var ticking = false;
+  var heroImg = $("#heroImg");
   if (!reduceMotion && heroImg) {
     window.addEventListener("scroll", function () {
       if (ticking) return;
@@ -188,7 +189,7 @@
     if (img.complete && img.naturalWidth > 0) img.classList.add("loaded");
   }
   // Set couple photo from config (photos/ folder)
-  var heroImg = $("#heroImg"), storyImg = $("#storyImg");
+  var storyImg = $("#storyImg");
   if (W.couplePhoto) {
     if (heroImg) heroImg.src = W.couplePhoto;
     if (storyImg) storyImg.src = W.couplePhoto;
@@ -313,25 +314,80 @@
   var saved = "en";
   try { saved = localStorage.getItem("wedding-lang") || "en"; } catch (e) {}
   applyLang(saved === "mr" ? "mr" : "en");
-  document.body.classList.add("ready");
 
-  // Welcome burst when page loads
-  if (window.WeddingFX && !reduceMotion) {
-    setTimeout(function () {
-      var w = window.innerWidth, h = window.innerHeight;
-      window.WeddingFX.burst(w * 0.25, h * 0.35);
-      window.WeddingFX.burst(w * 0.75, h * 0.3);
-    }, 600);
+  /* ---------- Gate welcome screen ---------- */
+  var gate     = $("#welcomeGate");
+  var gateBtn  = $("#gateBtn");
+  var gateContent = $(".gate-content");
+  var gatePetals  = $("#gatePetals");
+  var gateOpened  = false;
+
+  // Spawn falling petals inside the gate
+  if (gatePetals && !reduceMotion) {
+    var PETAL_COLORS = ["#F2B548","#E89A35","#FF9ECF","#FFD36B","#C9A45C","#FF6B6B","#fff0c0"];
+    var petalCount = window.innerWidth < 600 ? 16 : 28;
+    for (var gp = 0; gp < petalCount; gp++) {
+      var ps  = document.createElement("span");
+      var pc  = PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
+      var pw  = 7 + Math.random() * 11;
+      var br  = Math.random() > 0.5 ? "60% 0 60% 0" : "50% 50% 0 50%";
+      ps.style.cssText =
+        "left:"              + (Math.random() * 100)      + "%;" +
+        "width:"             + pw                          + "px;" +
+        "height:"            + (pw * 0.65)                 + "px;" +
+        "background:"        + pc                          + ";" +
+        "border-radius:"     + br                          + ";" +
+        "opacity:"           + (0.55 + Math.random() * 0.45) + ";" +
+        "animation-duration:" + (7 + Math.random() * 9)   + "s;" +
+        "animation-delay:-"  + (Math.random() * 14)        + "s";
+      gatePetals.appendChild(ps);
+    }
   }
 
-  // Auto-play music on first user interaction (browser policy requires a gesture)
-  function startMusicOnce() {
+  function openGate() {
+    if (!gate || gateOpened) return;
+    gateOpened = true;
+
+    // start music — this IS the user gesture
     musicOn();
-    document.removeEventListener("click", startMusicOnce);
-    document.removeEventListener("touchstart", startMusicOnce);
-    document.removeEventListener("keydown", startMusicOnce);
+
+    // hide the text content immediately
+    if (gateContent) gateContent.classList.add("hide");
+
+    // STEP 1 — doors slide in from both sides
+    gate.classList.add("closing");
+
+    // STEP 2 — after doors fully meet (500ms), swing them open
+    setTimeout(function () {
+      gate.classList.remove("closing");
+      gate.classList.add("opening");
+
+      // flower bursts as doors swing open
+      if (window.WeddingFX && !reduceMotion) {
+        var w = window.innerWidth, h = window.innerHeight;
+        window.WeddingFX.burst(w * 0.2,  h * 0.45);
+        window.WeddingFX.burst(w * 0.8,  h * 0.45);
+        window.WeddingFX.burst(w * 0.5,  h * 0.5);
+      }
+    }, 520);
+
+    // STEP 3 — hero page becomes visible (doors are ~halfway open)
+    setTimeout(function () {
+      document.body.classList.add("ready");
+    }, 900);
+
+    // STEP 4 — fully remove gate overlay
+    setTimeout(function () {
+      gate.classList.add("done");
+    }, 1550);
   }
-  document.addEventListener("click", startMusicOnce);
-  document.addEventListener("touchstart", startMusicOnce);
-  document.addEventListener("keydown", startMusicOnce);
+
+  if (gateBtn) {
+    gateBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      openGate();
+    });
+  } else {
+    document.body.classList.add("ready");
+  }
 })();

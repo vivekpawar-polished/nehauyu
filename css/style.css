@@ -18,14 +18,6 @@ body[data-lang="mr"] .script{font-family:var(--deva);font-weight:600}
 body[data-lang="mr"] .hero-mr,body[data-lang="mr"] .inv-mr{display:none}
 :focus-visible{outline:3px solid var(--saffron);outline-offset:3px}
 
-/* ---------- Opening ---------- */
-.opening{position:fixed;inset:0;z-index:100;background:var(--maroon);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;color:var(--gold);text-align:center;transition:opacity 1s ease,visibility 1s ease,transform 1.2s ease}
-.opening-ganpati{width:110px;height:110px;animation:pulse 2s ease-in-out infinite}
-.opening-text{font-size:1.5rem;letter-spacing:.05em}
-.opening-names{font-size:2.6rem;color:var(--ivory)}
-body.ready .opening{opacity:0;visibility:hidden;transform:scale(1.08)}
-@keyframes pulse{50%{transform:scale(1.07)}}
-
 /* ---------- Nav ---------- */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem clamp(1rem,4vw,3rem);color:var(--ivory);transition:background .4s,color .4s,box-shadow .4s,padding .4s}
 .nav.solid{background:rgba(255,248,236,.96);color:var(--maroon);box-shadow:0 2px 18px rgba(120,31,53,.12);padding-top:.5rem;padding-bottom:.5rem}
@@ -233,6 +225,7 @@ body[data-lang="mr"] .cd-label{letter-spacing:.03em;text-transform:none}
 /* ---------- Music ---------- */
 .music{position:fixed;right:1rem;bottom:1rem;z-index:60;width:54px;height:54px;border-radius:50%;border:2px solid var(--gold);background:var(--maroon);color:var(--gold);cursor:pointer;display:grid;place-items:center;box-shadow:0 8px 20px rgba(0,0,0,.3)}
 .music.playing{animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 8px 20px rgba(0,0,0,.3)}50%{box-shadow:0 8px 28px rgba(201,164,92,.55),0 0 0 6px rgba(201,164,92,.15)}}
 
 /* ---------- Responsive ---------- */
 @media (max-width:980px){
@@ -278,3 +271,215 @@ body[data-lang="mr"] .cd-label{letter-spacing:.03em;text-transform:none}
 .fx{position:fixed;inset:0;z-index:150;pointer-events:none;display:block}
 .music{bottom:1rem}
 .music.playing svg{animation:pulse 1.2s ease-in-out infinite}
+
+/* ========== WELCOME GATE ========== */
+.gate{
+  position:fixed;inset:0;z-index:300;
+  display:flex;align-items:stretch;
+  overflow:hidden;
+  pointer-events:auto;
+  background:linear-gradient(135deg,#3b0e1c 0%,#781F35 50%,#3b0e1c 100%);
+}
+
+/* --- centre content (always visible, sits above doors) --- */
+.gate-content{
+  position:absolute;inset:0;z-index:10;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:.45rem;
+  text-align:center;
+  color:var(--ivory);
+  padding:1.5rem;
+  pointer-events:none;
+  transition:opacity .4s ease, transform .4s ease;
+}
+.gate-content.hide{
+  opacity:0;
+  transform:scale(.94);
+  pointer-events:none;
+}
+.gate-ganpati{
+  width:clamp(56px,9vw,84px);height:clamp(56px,9vw,84px);
+  margin-bottom:.2rem;
+  filter:drop-shadow(0 0 14px rgba(201,164,92,.55));
+  animation:gateGlow 2.5s ease-in-out infinite alternate;
+}
+@keyframes gateGlow{
+  from{filter:drop-shadow(0 0 8px rgba(201,164,92,.4))}
+  to  {filter:drop-shadow(0 0 20px rgba(201,164,92,.8))}
+}
+.gate-shloka{
+  font-size:clamp(.8rem,2vw,1rem);
+  color:var(--gold);letter-spacing:.08em;opacity:.85;
+}
+.gate-invited{
+  font-size:clamp(.7rem,1.8vw,.9rem);
+  letter-spacing:.38em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+  margin-top:.3rem;
+}
+.gate-names{
+  font-size:clamp(2.8rem,10vw,6rem);
+  line-height:1.05;
+  text-shadow:0 4px 24px rgba(0,0,0,.7);
+  color:var(--ivory);
+  margin:.1rem 0;
+}
+.gate-amp{color:var(--gold);padding:0 .08em}
+.gate-date{
+  font-size:clamp(.75rem,1.8vw,.95rem);
+  letter-spacing:.2em;
+  color:rgba(255,248,236,.65);
+  font-weight:500;
+  margin-bottom:.5rem;
+}
+/* tap button */
+.gate-tap{
+  position:relative;
+  background:transparent;
+  border:2px solid var(--gold);
+  color:var(--gold);
+  font:inherit;
+  font-size:clamp(.7rem,1.8vw,.88rem);
+  font-weight:700;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  padding:.65rem 2rem;
+  border-radius:999px;
+  cursor:pointer;
+  pointer-events:auto;
+  transition:background .25s,color .25s,transform .2s;
+  overflow:visible;
+}
+.gate-tap:hover{background:var(--gold);color:var(--maroon-d);transform:scale(1.04)}
+.gate-tap:active{transform:scale(.97)}
+/* pulsing ring */
+.gate-tap-ring{
+  position:absolute;inset:-8px;
+  border-radius:999px;
+  border:2px solid rgba(201,164,92,.45);
+  animation:gateRing 2s ease-out infinite;
+  pointer-events:none;
+}
+@keyframes gateRing{
+  0%  {transform:scale(1);opacity:.7}
+  100%{transform:scale(1.4);opacity:0}
+}
+
+/* --- doors (hidden off-screen by default) --- */
+.gate-door{
+  position:absolute;top:0;bottom:0;
+  width:50%;
+  overflow:hidden;
+  z-index:5;
+  will-change:transform;
+  /* wood-grain */
+  background:
+    repeating-linear-gradient(175deg,transparent 0,transparent 22px,rgba(0,0,0,.05) 22px,rgba(0,0,0,.05) 23px),
+    linear-gradient(160deg,#5a1527 0%,#781F35 50%,#5a1527 100%);
+}
+.gate-door-left{
+  left:0;
+  transform-origin:left center;
+  transform:translateX(-100%);
+}
+.gate-door-right{
+  right:0;
+  transform-origin:right center;
+  transform:translateX(100%);
+}
+/* gold seam on meeting edges */
+.gate-door-left::after,
+.gate-door-right::after{
+  content:"";
+  position:absolute;top:0;bottom:0;
+  width:4px;
+  background:linear-gradient(180deg,transparent 0%,var(--gold) 15%,var(--gold) 85%,transparent 100%);
+}
+.gate-door-left::after{right:0}
+.gate-door-right::after{left:0}
+/* inner panel */
+.gate-door-inner{
+  position:absolute;
+  inset:clamp(10px,2.5vw,24px);
+  border:1.5px solid rgba(201,164,92,.3);
+  border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+}
+.gate-door-inner::before{
+  content:"";
+  position:absolute;inset:8px;
+  border:1px solid rgba(201,164,92,.15);
+  border-radius:2px;
+}
+/* corner ornaments */
+.gate-ornament{
+  position:absolute;
+  width:clamp(16px,3.5vw,28px);height:clamp(16px,3.5vw,28px);
+  border:2px solid rgba(201,164,92,.5);
+  border-style:solid;
+}
+.gate-ornament-tl{top:5px;left:5px;border-right:0;border-bottom:0}
+.gate-ornament-bl{bottom:5px;left:5px;border-right:0;border-top:0}
+.gate-ornament-tr{top:5px;right:5px;border-left:0;border-bottom:0}
+.gate-ornament-br{bottom:5px;right:5px;border-left:0;border-top:0}
+.gate-svg-deco{width:clamp(36px,7vw,70px);opacity:.65}
+/* handles */
+.gate-handle{
+  position:absolute;
+  top:50%;transform:translateY(-50%);
+  width:9px;height:clamp(36px,7vh,60px);
+  background:linear-gradient(180deg,#e0b84a,#9a7220,#e0b84a);
+  border-radius:5px;
+  box-shadow:0 2px 10px rgba(0,0,0,.5);
+}
+.gate-handle-right{right:clamp(6px,1.8vw,16px)}
+.gate-handle-left{left:clamp(6px,1.8vw,16px)}
+
+/* --- gate petals --- */
+.gate-petals{
+  position:absolute;inset:0;
+  pointer-events:none;overflow:hidden;
+  z-index:3;
+}
+.gate-petals span{
+  position:absolute;top:-20px;
+  animation:gateFall linear infinite;
+}
+@keyframes gateFall{
+  0%  {transform:translate3d(0,0,0) rotate(0deg)}
+  50% {transform:translate3d(28px,50vh,0) rotate(180deg)}
+  100%{transform:translate3d(-18px,108vh,0) rotate(360deg)}
+}
+
+/* --- STEP 1: doors slide in (class: closing) --- */
+.gate.closing .gate-door-left{
+  transform:translateX(0);
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+.gate.closing .gate-door-right{
+  transform:translateX(0);
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* --- STEP 2: doors swing open (class: opening, replaces closing) --- */
+.gate.opening .gate-door-left{
+  transform:perspective(1400px) rotateY(-115deg);
+  transition:transform 1s cubic-bezier(.6,0,.2,1);
+}
+.gate.opening .gate-door-right{
+  transform:perspective(1400px) rotateY(115deg);
+  transition:transform 1s cubic-bezier(.6,0,.2,1);
+}
+
+/* --- fully hidden after animation --- */
+.gate.done{
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .35s ease;
+}
+
+/* reduced motion: skip entirely */
+@media(prefers-reduced-motion:reduce){.gate{display:none}}

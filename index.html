@@ -56,6 +56,60 @@
 </svg>
 
 
+<!-- ===== Welcome Gate ===== -->
+<div id="welcomeGate" class="gate" aria-modal="true" role="dialog" aria-label="Wedding welcome">
+
+  <!-- falling petals inside gate -->
+  <div class="gate-petals" id="gatePetals" aria-hidden="true"></div>
+
+  <!-- left door -->
+  <div class="gate-door gate-door-left">
+    <div class="gate-door-inner">
+      <div class="gate-ornament gate-ornament-tl"></div>
+      <div class="gate-ornament gate-ornament-bl"></div>
+      <svg class="gate-svg-deco" viewBox="0 0 120 200" aria-hidden="true">
+        <path d="M60 10 C80 40 90 80 60 100 C30 80 40 40 60 10Z" fill="rgba(201,164,92,.18)"/>
+        <path d="M60 10 C80 40 90 80 60 100 C30 80 40 40 60 10Z" fill="none" stroke="rgba(201,164,92,.5)" stroke-width="1.5"/>
+        <circle cx="60" cy="100" r="6" fill="rgba(201,164,92,.6)"/>
+        <line x1="60" y1="106" x2="60" y2="190" stroke="rgba(201,164,92,.35)" stroke-width="1"/>
+        <circle cx="60" cy="140" r="3" fill="rgba(201,164,92,.4)"/>
+        <circle cx="60" cy="165" r="2" fill="rgba(201,164,92,.3)"/>
+      </svg>
+    </div>
+    <div class="gate-handle gate-handle-right"></div>
+  </div>
+
+  <!-- right door -->
+  <div class="gate-door gate-door-right">
+    <div class="gate-door-inner">
+      <div class="gate-ornament gate-ornament-tr"></div>
+      <div class="gate-ornament gate-ornament-br"></div>
+      <svg class="gate-svg-deco" viewBox="0 0 120 200" aria-hidden="true">
+        <path d="M60 10 C80 40 90 80 60 100 C30 80 40 40 60 10Z" fill="rgba(201,164,92,.18)"/>
+        <path d="M60 10 C80 40 90 80 60 100 C30 80 40 40 60 10Z" fill="none" stroke="rgba(201,164,92,.5)" stroke-width="1.5"/>
+        <circle cx="60" cy="100" r="6" fill="rgba(201,164,92,.6)"/>
+        <line x1="60" y1="106" x2="60" y2="190" stroke="rgba(201,164,92,.35)" stroke-width="1"/>
+        <circle cx="60" cy="140" r="3" fill="rgba(201,164,92,.4)"/>
+        <circle cx="60" cy="165" r="2" fill="rgba(201,164,92,.3)"/>
+      </svg>
+    </div>
+    <div class="gate-handle gate-handle-left"></div>
+  </div>
+
+  <!-- centre content (sits above both doors) -->
+  <div class="gate-content">
+    <svg class="gate-ganpati" aria-hidden="true"><use href="#ganpati"/></svg>
+    <p class="gate-shloka deva">॥ श्री गणेशाय नमः ॥</p>
+    <p class="gate-invited">YOU'RE INVITED</p>
+    <h1 class="gate-names script">Neha <span class="gate-amp">&amp;</span> Jeegnesh</h1>
+    <p class="gate-date">5 December 2026 · Surat</p>
+    <button id="gateBtn" class="gate-tap" type="button" aria-label="Open invitation">
+      <span class="gate-tap-ring"></span>
+      <span class="gate-tap-text">TAP TO OPEN</span>
+    </button>
+  </div>
+
+</div>
 
 <!-- ===== Navigation ===== -->
 <header id="nav" class="nav">

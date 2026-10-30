@@ -48,5 +48,5 @@ window.WEDDING = {
      below, e.g. "music/love-song.mp3".
      Leave empty ("") to use the built-in Web Audio melody.
      ---------------------------------------------------------- */
-  musicSrc: ""   // e.g. "music/love-song.mp3"
+  musicSrc: "music/love-song.mp3"
 };

@@ -65,6 +65,7 @@
 
   /* ---------- Navigation ---------- */
   var nav = $("#nav"), burger = $("#burger"), links = $("#navLinks");
+  // nav solid state handled by scroll.js on desktop; fallback for mobile
   function onScroll() { nav.classList.toggle("solid", window.scrollY > 60); }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -82,7 +83,7 @@
     burger.setAttribute("aria-expanded", String(open));
   });
 
-  // Smooth scroll for all in-page anchors
+  // Route in-page anchors through the section controller when it is active.
   $$('a[href^="#"]').forEach(function (a) {
     a.addEventListener("click", function (e) {
       var id = a.getAttribute("href");
@@ -91,13 +92,19 @@
       if (!target) return;
       e.preventDefault();
       closeMenu();
-      target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-      if (history.replaceState) history.replaceState(null, "", id);
+      var sections = $$("main > section");
+      var index = sections.indexOf(target);
+      if (window.WeddingScroll && index >= 0) {
+        window.WeddingScroll.goTo(index);
+      } else {
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+        if (history.replaceState) history.replaceState(null, "", id);
+      }
     });
   });
 
   // Active link highlight
-  if ("IntersectionObserver" in window) {
+  if (!window.WeddingScroll && "IntersectionObserver" in window) {
     var secs = $$("main section[id]");
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
@@ -113,7 +120,7 @@
 
   /* ---------- Reveal on scroll ---------- */
   var reveals = $$(".reveal");
-  if ("IntersectionObserver" in window && !reduceMotion) {
+  if (!window.WeddingScroll && "IntersectionObserver" in window && !reduceMotion) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
         if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
@@ -123,7 +130,7 @@
       el.style.transitionDelay = (i % 3) * 90 + "ms";
       io.observe(el);
     });
-  } else {
+  } else if (!window.WeddingScroll) {
     reveals.forEach(function (el) { el.classList.add("in"); });
   }
 
@@ -149,16 +156,27 @@
     cdDeco.innerHTML = d;
   }
 
-  /* ---------- Falling petals (hero) ---------- */
+  /* ---------- Falling rose petals (hero) ---------- */
+  var ROSE_PETALS = [
+    "radial-gradient(ellipse at 40% 30%,#e8527a,#c0183a)",
+    "radial-gradient(ellipse at 40% 30%,#f4a0b8,#d4607a)",
+    "radial-gradient(ellipse at 40% 30%,#d4507a,#8b0e26)",
+    "radial-gradient(ellipse at 40% 30%,#ff8fab,#c0183a)",
+    "radial-gradient(ellipse at 40% 30%,#ffc2d4,#e8527a)"
+  ];
   var pet = $("#petals");
   if (pet && !reduceMotion) {
-    var count = window.innerWidth < 700 ? 10 : 18;
+    var count = window.innerWidth < 700 ? 12 : 22;
     for (var p = 0; p < count; p++) {
       var s = document.createElement("span");
+      var pw = 10 + Math.random() * 12;
       s.style.left = Math.random() * 100 + "%";
-      s.style.animationDuration = 9 + Math.random() * 10 + "s";
+      s.style.width  = pw + "px";
+      s.style.height = (pw * 0.7) + "px";
+      s.style.background = ROSE_PETALS[Math.floor(Math.random() * ROSE_PETALS.length)];
+      s.style.borderRadius = Math.random() > 0.5 ? "50% 0 50% 50%" : "0 50% 50% 50%";
+      s.style.animationDuration = 8 + Math.random() * 10 + "s";
       s.style.animationDelay = -Math.random() * 14 + "s";
-      s.style.width = s.style.height = 8 + Math.random() * 10 + "px";
       pet.appendChild(s);
     }
   }
@@ -322,24 +340,24 @@
   var gatePetals  = $("#gatePetals");
   var gateOpened  = false;
 
-  // Spawn falling petals inside the gate
+  // Spawn falling rose petals inside the gate
   if (gatePetals && !reduceMotion) {
-    var PETAL_COLORS = ["#F2B548","#E89A35","#FF9ECF","#FFD36B","#C9A45C","#FF6B6B","#fff0c0"];
+    var GATE_ROSE = ["#c0183a","#e8527a","#f4a0b8","#d4507a","#ff8fab","#ffc2d4","#8b0e26"];
     var petalCount = window.innerWidth < 600 ? 16 : 28;
     for (var gp = 0; gp < petalCount; gp++) {
       var ps  = document.createElement("span");
-      var pc  = PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)];
-      var pw  = 7 + Math.random() * 11;
-      var br  = Math.random() > 0.5 ? "60% 0 60% 0" : "50% 50% 0 50%";
+      var pc  = GATE_ROSE[Math.floor(Math.random() * GATE_ROSE.length)];
+      var pw  = 8 + Math.random() * 11;
+      var br  = Math.random() > 0.5 ? "50% 0 50% 50%" : "0 50% 50% 50%";
       ps.style.cssText =
-        "left:"              + (Math.random() * 100)      + "%;" +
-        "width:"             + pw                          + "px;" +
-        "height:"            + (pw * 0.65)                 + "px;" +
-        "background:"        + pc                          + ";" +
-        "border-radius:"     + br                          + ";" +
+        "left:"              + (Math.random() * 100)        + "%;" +
+        "width:"             + pw                            + "px;" +
+        "height:"            + (pw * 0.65)                   + "px;" +
+        "background:"        + pc                            + ";" +
+        "border-radius:"     + br                            + ";" +
         "opacity:"           + (0.55 + Math.random() * 0.45) + ";" +
-        "animation-duration:" + (7 + Math.random() * 9)   + "s;" +
-        "animation-delay:-"  + (Math.random() * 14)        + "s";
+        "animation-duration:" + (7 + Math.random() * 9)     + "s;" +
+        "animation-delay:-"  + (Math.random() * 14)          + "s";
       gatePetals.appendChild(ps);
     }
   }
@@ -374,6 +392,9 @@
     // STEP 3 — hero page becomes visible (doors are ~halfway open)
     setTimeout(function () {
       document.body.classList.add("ready");
+      document.body.classList.add("snap-ready");
+      // trigger first section reveal via scroll engine
+      if (window.WeddingScroll) window.WeddingScroll.goTo(0);
     }, 900);
 
     // STEP 4 — fully remove gate overlay
@@ -387,7 +408,13 @@
       e.stopPropagation();
       openGate();
     });
+    if (reduceMotion) {
+      gateOpened = true;
+      document.body.classList.add("ready", "snap-ready");
+      if (window.WeddingScroll) window.WeddingScroll.goTo(0);
+    }
   } else {
-    document.body.classList.add("ready");
+    document.body.classList.add("ready", "snap-ready");
+    if (window.WeddingScroll) window.WeddingScroll.goTo(0);
   }
 })();

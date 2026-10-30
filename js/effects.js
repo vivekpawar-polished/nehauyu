@@ -36,26 +36,61 @@
       a = rnd(0, Math.PI * 2); s = rnd(.5, 2.4);
       parts.push({ k: "spark", x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 1, life: rnd(70, 110), max: 110, c: "#FFF8EC", r: 1.1 });
     }
-    // flowers flying up
+  // flowers flying up — now roses
     for (i = 0; i < 9; i++) {
       a = rnd(-Math.PI * .95, -Math.PI * .05); s = rnd(2.5, 7);
-      parts.push({ k: "flower", x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: rnd(110, 170), max: 170,
-        size: rnd(9, 17), rot: rnd(0, 6.28), vr: rnd(-.12, .12), hue: Math.random() < .75 ? 0 : 1, sw: rnd(0, 6.28) });
+      parts.push({ k: "rose", x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, life: rnd(110, 170), max: 170,
+        size: rnd(9, 17), rot: rnd(0, 6.28), vr: rnd(-.12, .12), hue: Math.floor(Math.random() * 4), sw: rnd(0, 6.28) });
     }
     if (window.WeddingMusic) window.WeddingMusic.pop();
     if (!running) { running = true; requestAnimationFrame(loop); }
   }
 
-  function flower(p, alpha) {
-    var r = p.size, n = 8, i;
-    c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.globalAlpha = alpha;
-    c.fillStyle = p.hue ? "#F2B548" : "#E89A35";
+  // Rose petal colors: deep red, pink, blush, gold-pink
+  var ROSE_COLORS = [
+    ["#c0183a", "#8b0e26"],  // deep red rose
+    ["#e8527a", "#b83058"],  // pink rose
+    ["#f4a0b8", "#d4607a"],  // blush rose
+    ["#d4507a", "#a02050"]   // magenta rose
+  ];
+
+  function rose(p, alpha) {
+    var r = p.size;
+    var cols = ROSE_COLORS[p.hue % 4];
+    c.save();
+    c.translate(p.x, p.y);
+    c.rotate(p.rot);
+    c.globalAlpha = alpha;
+
+    // outer petals (5 petals, ellipse-shaped)
+    var n = 5, i, a;
     for (i = 0; i < n; i++) {
-      var a = (Math.PI * 2 * i) / n;
-      c.beginPath(); c.arc(Math.cos(a) * r * .55, Math.sin(a) * r * .55, r * .42, 0, 6.283); c.fill();
+      a = (Math.PI * 2 * i) / n;
+      c.save();
+      c.rotate(a);
+      c.beginPath();
+      c.ellipse(0, -r * .55, r * .38, r * .52, 0, 0, Math.PI * 2);
+      c.fillStyle = cols[0];
+      c.fill();
+      c.restore();
     }
-    c.fillStyle = "#C9742A"; c.beginPath(); c.arc(0, 0, r * .4, 0, 6.283); c.fill();
-    c.fillStyle = "#781F35"; c.beginPath(); c.arc(0, 0, r * .16, 0, 6.283); c.fill();
+    // inner petals (5 petals, smaller, rotated)
+    for (i = 0; i < n; i++) {
+      a = (Math.PI * 2 * i) / n + Math.PI / n;
+      c.save();
+      c.rotate(a);
+      c.beginPath();
+      c.ellipse(0, -r * .32, r * .26, r * .36, 0, 0, Math.PI * 2);
+      c.fillStyle = cols[1];
+      c.fill();
+      c.restore();
+    }
+    // centre
+    c.beginPath();
+    c.arc(0, 0, r * .22, 0, Math.PI * 2);
+    c.fillStyle = cols[1];
+    c.fill();
+
     c.restore();
   }
 
@@ -77,9 +112,9 @@
         c.globalAlpha = c.globalAlpha * .35; // tail
         c.beginPath(); c.arc(p.x - p.vx, p.y - p.vy, p.r * .8, 0, 6.283); c.fill();
       } else {
-        p.sw += .05; p.vx *= .985; p.vy = p.vy * .985 + .035; // slow, floating fall
+        p.sw += .05; p.vx *= .985; p.vy = p.vy * .985 + .035;
         p.x += p.vx + Math.sin(p.sw) * .6; p.y += p.vy; p.rot += p.vr;
-        flower(p, Math.min(1, f * 2));
+        rose(p, Math.min(1, f * 2));
       }
     }
     c.globalAlpha = 1;

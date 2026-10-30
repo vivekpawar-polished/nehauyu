@@ -16,24 +16,37 @@ window.WEDDING = {
   lat: 21.1368697,
   lng: 72.8791545,
 
-  /* Countdown target (Asia/Kolkata, +05:30).
-     Ceremony time is NOT confirmed, so this defaults to the start of the
-     wedding day. When the family confirms the time, change to e.g.
-     "2026-12-05T11:30:00+05:30" */
   countdownTarget: "2026-12-05T00:00:00+05:30",
 
   /* Event times: leave empty until confirmed. Shown only if filled. */
   haldiTime: "",
   weddingTime: "",
 
-  /* Gallery: first image is the featured one. Add more entries as files
-     are copied into /images (e.g. { src: "images/photo2.jpg", alt: "..." }) */
+  /* ----------------------------------------------------------
+     COUPLE PHOTO
+     Put your couple photo in the  photos/  folder and set the
+     filename below. Used in the hero banner and story section.
+     ---------------------------------------------------------- */
+  couplePhoto: "photos/couple.jpeg",
+
+  /* ----------------------------------------------------------
+     GALLERY
+     Put all photos in the  photos/  folder.
+     The first entry is shown as the large featured photo.
+     Add or remove lines as needed.
+     ---------------------------------------------------------- */
   gallery: [
-    { src: "images/couple.jpg", alt: "Neha and Jeegnesh" }
-    // { src: "images/photo2.jpg", alt: "Neha and Jeegnesh" },
+    { src: "photos/couple.jpeg",  alt: "Neha and Jeegnesh" },
+    // { src: "photos/haldi.jpg",   alt: "Haldi ceremony" },
+    // { src: "photos/family.jpg",  alt: "With family" },
+    // { src: "photos/fun.jpg",     alt: "Fun moments" },
   ],
 
-  /* Music: put a file in /images or /audio and set the path, e.g. "audio/shehnai.mp3".
-     Leave empty to hide the music button. */
-  musicSrc: ""
+  /* ----------------------------------------------------------
+     MUSIC
+     Put your song in the  music/  folder and set the filename
+     below, e.g. "music/love-song.mp3".
+     Leave empty ("") to use the built-in Web Audio melody.
+     ---------------------------------------------------------- */
+  musicSrc: ""   // e.g. "music/love-song.mp3"
 };

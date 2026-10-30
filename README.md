@@ -11,12 +11,12 @@ js/config.js   <- edit names, dates, venue, times, gallery, music here
 js/i18n.js     <- English + Marathi text
 js/main.js     <- animations, countdown, language switcher, gallery, share
 images/
-  couple.jpg   <- PUT YOUR COUPLE PHOTO HERE (exact name)
+  couple.jpeg   <- PUT YOUR COUPLE PHOTO HERE (exact name)
 ```
 
 ## 1. Add your photo
 
-Copy the couple photograph into `images/` and name it **`couple.jpg`**
+Copy the couple photograph into `images/` and name it **`couple.jpeg`**
 (resize to about 1600px on the long side, under 500 KB, for fast mobile loading).
 Do not use the invitation card as a background.
 

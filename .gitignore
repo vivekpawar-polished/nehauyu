@@ -1,2 +1,11 @@
 .DS_Store
 node_modules/
+
+# Keep photos/ and music/ folders tracked (remove lines below to commit your files)
+# photos/*.jpg
+# photos/*.jpeg
+# photos/*.png
+# photos/*.webp
+# music/*.mp3
+# music/*.ogg
+# music/*.m4a

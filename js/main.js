@@ -164,7 +164,7 @@
   }
 
   /* ---------- Parallax (hero image) ---------- */
-  var heroImg = $("#heroImg"), ticking = false;
+  var ticking = false;
   if (!reduceMotion && heroImg) {
     window.addEventListener("scroll", function () {
       if (ticking) return;
@@ -186,6 +186,12 @@
     });
     img.addEventListener("load", function () { img.classList.add("loaded"); });
     if (img.complete && img.naturalWidth > 0) img.classList.add("loaded");
+  }
+  // Set couple photo from config (photos/ folder)
+  var heroImg = $("#heroImg"), storyImg = $("#storyImg");
+  if (W.couplePhoto) {
+    if (heroImg) heroImg.src = W.couplePhoto;
+    if (storyImg) storyImg.src = W.couplePhoto;
   }
   $$("#heroImg, #storyImg").forEach(guardImg);
 
@@ -307,18 +313,25 @@
   var saved = "en";
   try { saved = localStorage.getItem("wedding-lang") || "en"; } catch (e) {}
   applyLang(saved === "mr" ? "mr" : "en");
+  document.body.classList.add("ready");
 
-  // Page opening: guest chooses music (browsers need a tap before sound)
-  var op = $("#opening");
-  function openPage(withMusic) {
-    if (withMusic) musicOn();
-    document.body.classList.add("ready");
-    setTimeout(function () { if (op && op.parentNode) op.parentNode.removeChild(op); }, 1200);
-    if (window.WeddingFX) setTimeout(function () {
+  // Welcome burst when page loads
+  if (window.WeddingFX && !reduceMotion) {
+    setTimeout(function () {
       var w = window.innerWidth, h = window.innerHeight;
-      window.WeddingFX.burst(w * 0.25, h * 0.35); window.WeddingFX.burst(w * 0.75, h * 0.3);
-    }, 500);
+      window.WeddingFX.burst(w * 0.25, h * 0.35);
+      window.WeddingFX.burst(w * 0.75, h * 0.3);
+    }, 600);
   }
-  $("#enterMusic").addEventListener("click", function (e) { e.stopPropagation(); openPage(true); });
-  $("#enterQuiet").addEventListener("click", function (e) { e.stopPropagation(); openPage(false); });
+
+  // Auto-play music on first user interaction (browser policy requires a gesture)
+  function startMusicOnce() {
+    musicOn();
+    document.removeEventListener("click", startMusicOnce);
+    document.removeEventListener("touchstart", startMusicOnce);
+    document.removeEventListener("keydown", startMusicOnce);
+  }
+  document.addEventListener("click", startMusicOnce);
+  document.addEventListener("touchstart", startMusicOnce);
+  document.addEventListener("keydown", startMusicOnce);
 })();

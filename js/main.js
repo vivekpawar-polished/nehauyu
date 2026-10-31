@@ -28,7 +28,7 @@
     });
     document.title = l === "mr"
       ? "नेहा आणि जिग्नेश | शुभविवाह निमंत्रण | ५ डिसेंबर २०२६"
-      : "Neha & Jeegnesh | Wedding Invitation | 5 December 2026";
+      : "Neha & Jignesh | Wedding Invitation | 5 December 2026";
     updateMusicLabel();
     try { localStorage.setItem("wedding-lang", l); } catch (e) {}
   }
@@ -210,7 +210,7 @@
   var storyImg = $("#storyImg");
   if (W.couplePhoto) {
     if (heroImg) heroImg.src = W.couplePhoto;
-    if (storyImg) storyImg.src = W.couplePhoto;
+    if (storyImg) storyImg.src = W.couplePhoto2;
   }
   $$("#heroImg, #storyImg").forEach(guardImg);
 

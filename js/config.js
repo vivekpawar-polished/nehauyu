@@ -3,7 +3,7 @@
    ========================================================== */
 window.WEDDING = {
   bride: { en: "Neha", mr: "नेहा" },
-  groom: { en: "Jeegnesh", mr: "जिग्नेश" },
+  groom: { en: "Jignesh", mr: "जिग्नेश" },
 
   haldiDate: "4 December 2026",
   weddingDate: "5 December 2026",
@@ -27,7 +27,8 @@ window.WEDDING = {
      Put your couple photo in the  photos/  folder and set the
      filename below. Used in the hero banner and story section.
      ---------------------------------------------------------- */
-  couplePhoto: "photos/couple.jpeg",
+  couplePhoto: "photos/4.png",
+  couplePhoto2: "photos/couple.jpeg",
 
   /* ----------------------------------------------------------
      GALLERY
@@ -36,7 +37,7 @@ window.WEDDING = {
      Add or remove lines as needed.
      ---------------------------------------------------------- */
   gallery: [
-    { src: "photos/couple.jpeg",  alt: "Neha and Jeegnesh" },
+    { src: "photos/couple.jpeg",  alt: "Neha and Jignesh" },
     // { src: "photos/haldi.jpg",   alt: "Haldi ceremony" },
     // { src: "photos/family.jpg",  alt: "With family" },
     // { src: "photos/fun.jpg",     alt: "Fun moments" },

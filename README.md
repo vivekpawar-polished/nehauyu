@@ -1,4 +1,4 @@
-# Neha & Jeegnesh — Wedding Invitation Website
+# Neha & Jignesh — Wedding Invitation Website
 
 Plain HTML + CSS + JavaScript. No build step, no backend.
 

@@ -3,7 +3,7 @@ window.I18N = {
   en: {
     nav_home: "Home", nav_invitation: "Invitation", nav_story: "Our Story",
     nav_events: "Events", nav_countdown: "Countdown", nav_venue: "Venue", nav_gallery: "Gallery",
-    bride: "Neha", groom: "Jeegnesh",
+    bride: "Neha", groom: "Jignesh",
     hero_shloka: "॥ श्री गणेशाय नमः ॥",
     hero_sub: "Two Hearts, One Beautiful Journey",
     hero_invite: "Together with our families, we invite you to celebrate our special day.",
@@ -13,7 +13,7 @@ window.I18N = {
     btn_explore: "Explore Our Wedding", btn_view_venue: "View Venue",
     inv_eyebrow: "With the Blessings of Our Families",
     inv_title: "शुभविवाह सोहळा",
-    inv_text: "With the blessings of our families, we joyfully invite you to celebrate the wedding of Neha and Jeegnesh. Your presence and blessings will make our special day even more memorable.",
+    inv_text: "With the blessings of our families, we joyfully invite you to celebrate the wedding of Neha and Jignesh. Your presence and blessings will make our special day even more memorable.",
     inv_venue: "Radhe Krishna Farm, Surat",
     btn_share: "Share Invitation",
     story_eyebrow: "Our Story",
@@ -33,11 +33,11 @@ window.I18N = {
     btn_directions: "Get Directions",
     gal_eyebrow: "Moments", gal_title: "Our Gallery",
     gal_note: "More photographs will be added soon.",
-    foot_title: "With Love, Neha & Jeegnesh",
+    foot_title: "With Love, Neha & Jignesh",
     foot_text: "Thank you for being a part of our happiness.",
     foot_haldi: "Haldi", foot_wedding: "Wedding",
     btn_top: "Back to Top",
-    share_msg: "You are warmly invited to the wedding of Neha & Jeegnesh on 5 December 2026 at Radhe Krishna Farm, Surat. We would love to celebrate this special day with you!",
+    share_msg: "You are warmly invited to the wedding of Neha & Jignesh on 5 December 2026 at Radhe Krishna Farm, Surat. We would love to celebrate this special day with you!",
     music_play: "Play music", music_pause: "Pause music"
   },
   mr: {

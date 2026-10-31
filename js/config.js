@@ -18,9 +18,8 @@ window.WEDDING = {
 
   countdownTarget: "2026-12-05T00:00:00+05:30",
 
-  /* Event times: leave empty until confirmed. Shown only if filled. */
-  haldiTime: "",
-  weddingTime: "",
+  haldiTime: "4:00 PM",
+  weddingTime: "6:35 PM",
 
   /* ----------------------------------------------------------
      COUPLE PHOTO
@@ -37,10 +36,11 @@ window.WEDDING = {
      Add or remove lines as needed.
      ---------------------------------------------------------- */
   gallery: [
-    { src: "photos/couple.jpeg",  alt: "Neha and Jignesh" },
-    // { src: "photos/haldi.jpg",   alt: "Haldi ceremony" },
-    // { src: "photos/family.jpg",  alt: "With family" },
-    // { src: "photos/fun.jpg",     alt: "Fun moments" },
+    { src: "photos/1.jpeg", alt: "Neha and Jignesh" },
+    { src: "photos/2.jpeg", alt: "Neha and Jignesh" },
+    { src: "photos/3.jpeg", alt: "Neha and Jignesh" },
+    { src: "photos/4.jpeg", alt: "Neha and Jignesh" },
+    { src: "photos/5.jpeg", alt: "Neha and Jignesh" },
   ],
 
   /* ----------------------------------------------------------

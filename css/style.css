@@ -629,6 +629,19 @@ body.snap-ready main > section#gallery .gallery.single .g-item.featured {
   height: min(48vh, 500px);
   aspect-ratio: auto;
 }
+body.snap-ready main > section#gallery .section-head {
+  margin-bottom: .75rem;
+}
+body.snap-ready main > section#gallery .gallery:not(.single) {
+  width: 100%;
+  height: clamp(300px, 52vh, 440px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+body.snap-ready main > section#gallery .gallery:not(.single) .g-item.featured {
+  grid-column: auto;
+  grid-row: auto;
+}
 body.snap-ready main > section .note {
   margin-top: 1rem;
 }
@@ -763,7 +776,55 @@ body.snap-ready.transitioning main::after {
     width: calc(100% - .4rem);
     margin-left: .2rem;
     margin-right: auto;
-    padding: 2.4rem .8rem 1.2rem;
+    gap: .35rem;
+    padding: 1.4rem .8rem 3.8rem;
+  }
+  body.snap-ready main > section.hero .hero-media img {
+    object-position: 12% center;
+  }
+  body.snap-ready main > section.hero.sec-active .hero-media img {
+    animation-name: mobileSceneZoom;
+  }
+  @keyframes mobileSceneZoom {
+    from { transform: scale(1.01); }
+    to { transform: scale(1.07); }
+  }
+  body.snap-ready main > section.hero .hero-ganpati {
+    width: 58px;
+    height: 58px;
+  }
+  body.snap-ready main > section.hero .hero-shloka {
+    font-size: 1rem;
+  }
+  body.snap-ready main > section.hero .hero-names {
+    font-size: clamp(2.7rem, 11vw, 3.5rem);
+  }
+  body.snap-ready main > section.hero .hero-sub {
+    font-size: 1.05rem;
+  }
+  body.snap-ready main > section.hero .hero-mr {
+    font-size: .9rem;
+  }
+  body.snap-ready main > section.hero .hero-en {
+    font-size: .95rem;
+  }
+  body.snap-ready main > section.hero .hero-dates {
+    margin: .35rem 0;
+    padding: .55rem .8rem;
+    font-size: .82rem;
+    letter-spacing: .08em;
+  }
+  body.snap-ready main > section.hero .hero-btns {
+    gap: .45rem;
+    margin-top: .1rem;
+  }
+  body.snap-ready main > section.hero .hero-btns .btn {
+    min-height: 44px;
+    padding: .45rem .8rem;
+    font-size: .9rem;
+  }
+  body.snap-ready main > section.hero .scroll-ind {
+    display: none;
   }
   body.snap-ready main > section#invitation {
     padding: 3.7rem .65rem .6rem;
@@ -867,25 +928,61 @@ body.snap-ready.transitioning main::after {
   body.snap-ready main > section#gallery .gallery.single .g-item.featured {
     height: 42vh;
   }
+  body.snap-ready main > section#gallery {
+    padding-top: 3.8rem;
+  }
+  body.snap-ready main > section#gallery .section-head {
+    margin-bottom: .35rem;
+  }
+  body.snap-ready main > section#gallery .gallery:not(.single) {
+    width: 100%;
+    height: clamp(210px, 38vh, 300px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: .5rem;
+  }
+  body.snap-ready main > section#gallery .gallery:not(.single) .g-item.featured {
+    grid-column: auto;
+    grid-row: auto;
+  }
 }
 
 @media (max-width: 760px) and (max-height: 700px) {
+  .music {
+    top: 4.5rem;
+    bottom: auto;
+  }
   body.snap-ready main > section.hero .hero-content {
-    gap: .3rem;
-    padding: 1.5rem .5rem .7rem;
+    gap: .2rem;
+    padding: .8rem .5rem 3.2rem;
   }
   body.snap-ready main > section.hero .hero-ganpati {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
+  }
+  body.snap-ready main > section.hero .hero-names {
+    font-size: clamp(2rem, 9.5vw, 2.6rem);
+  }
+  body.snap-ready main > section.hero .hero-mr {
+    display: none;
+  }
+  body.snap-ready main > section.hero .hero-en {
+    font-size: .85rem;
   }
   body.snap-ready main > section.hero .hero-dates {
-    margin: .2rem 0;
-    padding: .45rem .8rem;
-    font-size: .82rem;
+    margin: .15rem 0;
+    padding: .3rem .5rem;
+    font-size: .72rem;
+    letter-spacing: .05em;
   }
   body.snap-ready main > section.hero .hero-btns {
-    gap: .4rem;
-    margin-top: .2rem;
+    gap: .3rem;
+    margin-top: 0;
+  }
+  body.snap-ready main > section.hero .hero-btns .btn {
+    min-height: 40px;
+    font-size: .82rem;
+    padding: .35rem .6rem;
   }
   body.snap-ready main > section#venue .venue-map {
     aspect-ratio: 2.3 / 1;

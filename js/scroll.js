@@ -74,27 +74,41 @@
   }
 
   function setSectionState(next, direction) {
+    var previous = sections[current];
+    var entering = sections[next];
+
     sections.forEach(function (section) {
       section.classList.remove("sec-active", "sec-exit-up", "sec-exit-down", "sec-enter-up", "sec-enter-down");
     });
 
-    sections[current].classList.add(direction > 0 ? "sec-exit-up" : "sec-exit-down");
-    sections[next].classList.add(direction > 0 ? "sec-enter-up" : "sec-enter-down");
+    previous.classList.add(direction > 0 ? "sec-exit-up" : "sec-exit-down");
+    entering.classList.add(direction > 0 ? "sec-enter-up" : "sec-enter-down");
 
     if (reduceMotion) {
-      sections[next].classList.remove("sec-enter-up", "sec-enter-down");
-      sections[next].classList.add("sec-active");
-      triggerReveal(sections[next]);
+      previous.classList.remove("sec-exit-up", "sec-exit-down");
+      entering.classList.remove("sec-enter-up", "sec-enter-down", "sec-exit-up", "sec-exit-down");
+      entering.classList.add("sec-active");
+      triggerReveal(entering);
       return;
     }
 
+    var activated = false;
+    function activateEntering() {
+      if (activated) return;
+      activated = true;
+      entering.classList.remove("sec-enter-up", "sec-enter-down", "sec-exit-up", "sec-exit-down");
+      entering.classList.add("sec-active");
+      triggerReveal(entering);
+    }
+
     requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        sections[next].classList.remove("sec-enter-up", "sec-enter-down");
-        sections[next].classList.add("sec-active");
-        triggerReveal(sections[next]);
-      });
+      requestAnimationFrame(activateEntering);
     });
+    window.setTimeout(activateEntering, 120);
+
+    window.setTimeout(function () {
+      previous.classList.remove("sec-exit-up", "sec-exit-down");
+    }, DURATION);
   }
 
   function goTo(idx) {
